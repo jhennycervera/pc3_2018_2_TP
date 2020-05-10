@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "FuncAux.h"
+// ESTE COMENTARIO ES EN OTRA RAMA
 
 void LeerArticulos(int *codProdArt,int * stock,double *pUnid,double*pDecen,
                     int*contArt){
