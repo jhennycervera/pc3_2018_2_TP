@@ -31,6 +31,8 @@ int main(int argc, char** argv) {
     OrdenarYReescribirArt(codProdArt,stock,pUnid,pDecen,contArt);
     ProcesarCompras(dd, mm, aa, hh, min, seg, dni,totalComp,&contCompr,
            codProdArt,stock,pUnid,pDecen,contArt );
+    GuardarYOrdenarTotalComp(dd, mm, aa, hh, min, seg, dni,totalComp, contCompr);
+    ImprimirPromYMediana(totalComp, contCompr);
     return (EXIT_SUCCESS);
 }
 

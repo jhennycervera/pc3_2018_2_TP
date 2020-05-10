@@ -24,5 +24,8 @@ int BuscarProd(int ,int *,int );
 void ProcesarCompras(int* , int *, int* ,int* ,int* ,int* ,int* ,
                  double *, int *, int*,
             int* ,double *,double *,int  );
+
+void GuardarYOrdenarTotalComp(int* , int *, int* , int*, int*, int*, 
+        int*,double*, int );
 #endif /* FUNCAUX_H */
 

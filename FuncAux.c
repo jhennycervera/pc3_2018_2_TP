@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "FuncAux.h"
-// ESTE COMENTARIO ES EN OTRA RAMA
+// 
 
 void LeerArticulos(int *codProdArt,int * stock,double *pUnid,double*pDecen,
                     int*contArt){
@@ -150,4 +150,71 @@ int BuscarProd(int codPr,int *codProdArt,int contArt){
        if(codPr==codProdArt[i]) return i;
    }
    return -1;
+}
+
+void GuardarYOrdenarTotalComp(int* dd, int *mm, int* aa, int*hh, int*min, int*seg, 
+        int*dni,double*totalComp, int contCompr){
+    
+    FILE*archTotal;
+    archTotal=fopen("Totales.txt", "w");
+    if(archTotal==NULL){
+        printf("No se puede abrir el archivo Totales.txt\n");
+        exit(1);
+       
+    }  
+     int fechai, fechaj, tiempoi,tiempoj;
+    for(int i=0; i<contCompr-1; i++){
+           for(int j=i+1; j<contCompr; j++){
+               fechai=dd[i]+mm[i]*100 + aa[i]*10000;
+               fechaj=dd[j]+mm[j]*100 + aa[j]*10000;
+               tiempoi=hh[i]*10000 + min[i]*100 + seg[i];
+               tiempoj=hh[j]*10000 + min[j]*100 + seg[j];
+               
+               if(fechai>fechaj || fechai==fechaj && tiempoi>tiempoj){
+                   cambiarI(dd,i, j);
+                   cambiarI(mm,i, j);
+                   cambiarI(aa,i, j);
+                   cambiarI(hh,i, j);
+                   cambiarI(min,i, j);
+                   cambiarI(seg,i, j);
+                   cambiarI(dni,i, j);
+                   cambiarD(totalComp,i, j);  
+               }
+           }
+    } 
+        
+    
+    for(int i=0; i<contCompr; i++){
+        fprintf(archTotal, "%02d/%02d/%d  %5d:%02d:%02d  %5d   %5.2lf\n",dd[i], mm[i], aa[i], hh[i], min[i],seg[i], dni[i],totalComp[i]);     
+    }
+    
+    fclose(archTotal);
+}
+
+
+void  ImprimirPromYMediana(double*totalComp, int contCompr){
+    
+    double sumComp=0;
+    double mediana;
+    for(int i=0; i<contCompr; i++){
+        sumComp+=totalComp[i];
+    }
+    printf("Promedio: %.2lf\n", sumComp/contCompr);
+    
+    for(int i=0; i<contCompr-1; i++){
+        for(int j=i+1; j<contCompr ; j++){
+            if(totalComp[i]>totalComp[j]) 
+                cambiarD(totalComp, i, j);
+        }
+    }
+    
+    for(int i=0; i<contCompr; i++){
+        printf("%lf\n", totalComp[i]);
+    }
+    
+    if(contCompr%2==0){
+        mediana=(totalComp[contCompr/2]+totalComp[(contCompr/2)-1])/2.0;
+    }
+    else mediana=totalComp[contCompr/2];
+    printf("Mediana: %.2lf\n",mediana);
 }
